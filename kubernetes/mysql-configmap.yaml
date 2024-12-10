@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+data:
+  my.cnf: |
+    [mysqld]
+    character-set-server=utf8mb4
+    datadir=/var/lib/mysql
+    socket=/var/lib/mysql/mysql.sock
+    pid-file=/var/lib/mysql/mysql.pid
