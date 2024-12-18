@@ -3,33 +3,33 @@ package store
 import (
 	"context"
 
-	"github.com/static-fuji/go_todo_app/entity"
+	"github.com/static-fuji/lab_quiz/entity"
 )
 
-func (r *Repository) ListTasks(
+func (r *Repository) ListWords(
 	ctx context.Context, db Queryer,
-) (entity.Tasks, error) {
-	tasks := entity.Tasks{}
+) (entity.Words, error) {
+	words := entity.Words{}
 	sql := `SELECT
-		id, title, status, created, modified
-		FROM task`
-	if err := db.SelectContext(ctx, &tasks, sql); err != nil {
+		id, title, description, created, modified
+		FROM words`
+	if err := db.SelectContext(ctx, &words, sql); err != nil {
 		return nil, err
 	}
-	return tasks, nil
+	return words, nil
 }
 
-func (r *Repository) AddTask(
-	ctx context.Context, db Execer, t *entity.Task,
+func (r *Repository) AddWord(
+	ctx context.Context, db Execer, t *entity.Word,
 ) error {
 	t.Created = r.Clocker.Now()
 	t.Modified = r.Clocker.Now()
-	sql := `INSERT INTO task
-		(title, status, created, modified)
+	sql := `INSERT INTO words
+		(title, description, created, modified)
 		VALUES (?, ?, ?, ?)`
 
 	results, err := db.ExecContext(
-		ctx, sql, t.Title, t.Status, t.Created, t.Modified,
+		ctx, sql, t.Title, t.Created, t.Modified,
 	)
 
 	if err != nil {
@@ -41,6 +41,6 @@ func (r *Repository) AddTask(
 		return err
 	}
 
-	t.ID = entity.TaskID(id)
+	t.ID = entity.WordID(id)
 	return nil
 }

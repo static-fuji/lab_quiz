@@ -5,13 +5,13 @@ import (
 )
 
 type Config struct {
-	Env        string `env:"TODO_ENV" envDefault:"dev"`
+	Env        string `env:"LAB_ENV" envDefault:"dev"`
 	Port       int    `env:"PORT" envDefault:"80"`
-	DBHost     string `env:"TODO_DB_HOST" envDefault:"todo-db"`
-	DBPort     int    `env:"TODO_DB_PORT" envDefault:"33306"`
-	DBUser     string `env:"TODO_DB_USER" envDefault:"todo"`
-	DBPassword string `env:"TODO_DB_PASSWORD" envDefault:"todo"`
-	DBName     string `env:"TODO_DB_DATABASE" envDefault:"todo"`
+	DBHost     string `env:"LAB_DB_HOST" envDefault:"lab-db"`
+	DBPort     int    `env:"LAB_DB_PORT" envDefault:"3306"`
+	DBUser     string `env:"LAB_DB_USER" envDefault:"lab"`
+	DBPassword string `env:"LAB_DB_PASSWORD" envDefault:"lab"`
+	DBName     string `env:"LAB_DB_DATABASE" envDefault:"lab"`
 }
 
 func New() (*Config, error) {

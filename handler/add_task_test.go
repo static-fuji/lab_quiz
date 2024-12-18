@@ -8,8 +8,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/static-fuji/go_todo_app/entity"
-	"github.com/static-fuji/go_todo_app/testutil"
+	"github.com/static-fuji/lab_quiz/entity"
+	"github.com/static-fuji/lab_quiz/testutil"
 )
 
 func TestAddTask(t *testing.T) {
@@ -47,21 +47,21 @@ func TestAddTask(t *testing.T) {
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(
 				http.MethodPost,
-				"/tasks",
+				"/words",
 				bytes.NewReader(testutil.LoadFile(t, tt.reqFile)),
 			)
 
-			moq := &AddTaskServiceMock{}
-			moq.AddTaskFunc = func(
+			moq := &AddWordServiceMock{}
+			moq.AddWordFunc = func(
 				ctx context.Context, title string,
-			) (*entity.Task, error) {
+			) (*entity.Word, error) {
 				if tt.want.status == http.StatusOK {
-					return &entity.Task{ID: 1}, nil
+					return &entity.Word{ID: 1}, nil
 				}
 				return nil, errors.New("error from mock")
 			}
 
-			sut := AddTask{
+			sut := AddWord{
 				Service: moq,
 			}
 			sut.ServeHTTP(w, r)

@@ -6,11 +6,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
-	"github.com/static-fuji/go_todo_app/clock"
-	"github.com/static-fuji/go_todo_app/config"
-	"github.com/static-fuji/go_todo_app/handler"
-	"github.com/static-fuji/go_todo_app/service"
-	"github.com/static-fuji/go_todo_app/store"
+	"github.com/static-fuji/lab_quiz/clock"
+	"github.com/static-fuji/lab_quiz/config"
+	"github.com/static-fuji/lab_quiz/handler"
+	"github.com/static-fuji/lab_quiz/service"
+	"github.com/static-fuji/lab_quiz/store"
 )
 
 func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), error) {
@@ -27,16 +27,16 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	}
 	r := store.Repository{Clocker: clock.RealClocker{}}
 
-	at := &handler.AddTask{
-		Service:   &service.AddTask{DB: db, Repo: &r},
+	at := &handler.AddWord{
+		Service:   &service.AddWord{DB: db, Repo: &r},
 		Validator: v,
 	}
-	mux.Post("/tasks", at.ServeHTTP)
+	mux.Post("/words", at.ServeHTTP)
 
-	lt := &handler.ListTask{
-		Service: &service.ListTask{DB: db, Repo: &r},
+	lt := &handler.ListWord{
+		Service: &service.ListWord{DB: db, Repo: &r},
 	}
-	mux.Get("/tasks", lt.ServeHTTP)
+	mux.Get("/words", lt.ServeHTTP)
 
 	return mux, cleanup, nil
 }

@@ -8,8 +8,8 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/static-fuji/go_todo_app/clock" // ここを追加
-	"github.com/static-fuji/go_todo_app/config"
+	"github.com/static-fuji/lab_quiz/clock" // ここを追加
+	"github.com/static-fuji/lab_quiz/config"
 )
 
 type Beginner interface {
