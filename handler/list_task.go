@@ -3,22 +3,21 @@ package handler
 import (
 	"net/http"
 
-	"github.com/static-fuji/go_todo_app/entity"
+	"github.com/static-fuji/lab_quiz/entity"
 )
 
-type ListTask struct {
-	Service ListTasksService
+type ListWord struct {
+	Service ListWordsService
 }
 
-type task struct {
-	ID     entity.TaskID     `json:"id"`
-	Title  string            `json:"title"`
-	Status entity.TaskStatus `json:"status"`
+type word struct {
+	ID    entity.WordID `json:"id"`
+	Title string        `json:"title"`
 }
 
-func (lt *ListTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (lt *ListWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	tasks, err := lt.Service.ListTasks(ctx)
+	words, err := lt.Service.ListWords(ctx)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),
@@ -26,12 +25,11 @@ func (lt *ListTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rsp := []task{}
-	for _, t := range tasks {
-		rsp = append(rsp, task{
-			ID:     t.ID,
-			Title:  t.Title,
-			Status: t.Status,
+	rsp := []word{}
+	for _, t := range words {
+		rsp = append(rsp, word{
+			ID:    t.ID,
+			Title: t.Title,
 		})
 	}
 	RespondJSON(ctx, w, rsp, http.StatusOK)

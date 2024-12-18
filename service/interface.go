@@ -3,14 +3,14 @@ package service
 import (
 	"context"
 
-	"github.com/static-fuji/go_todo_app/entity"
-	"github.com/static-fuji/go_todo_app/store"
+	"github.com/static-fuji/lab_quiz/entity"
+	"github.com/static-fuji/lab_quiz/store"
 )
 
-type TaskAdder interface {
-	AddTask(ctx context.Context, db store.Execer, t *entity.Task) error
+type WordAdder interface {
+	AddWord(ctx context.Context, db store.Execer, t *entity.Word) error
 }
 
-type TaskLister interface {
-	ListTasks(ctx context.Context, db store.Queryer) (entity.Tasks, error)
+type WordLister interface {
+	ListWords(ctx context.Context, db store.Queryer) (entity.Words, error)
 }

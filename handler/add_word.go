@@ -7,12 +7,12 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type AddTask struct {
-	Service   AddTaskService
+type AddWord struct {
+	Service   AddWordService
 	Validator *validator.Validate
 }
 
-func (at *AddTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var b struct {
 		Title string `json:"title" validate:"required"`
@@ -31,7 +31,7 @@ func (at *AddTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t, err := at.Service.AddTask(ctx, b.Title)
+	t, err := at.Service.AddWord(ctx, b.Title)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),

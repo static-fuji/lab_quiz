@@ -13,12 +13,12 @@ import (
 func OpenDBForTest(t *testing.T) *sqlx.DB {
 	t.Helper()
 
-	port := 33306
+	port := 3306
 	if _, difined := os.LookupEnv("CI"); difined {
 		port = 3306
 	}
 
-	db, err := sql.Open("mysql", fmt.Sprintf("todo:todo@tcp(127.0.0.1:%d)/todo?parseTime=true", port))
+	db, err := sql.Open("mysql", fmt.Sprintf("lab:lab@tcp(127.0.0.1:%d)/lab?parseTime=true", port))
 	if err != nil {
 		t.Fatal(err)
 	}

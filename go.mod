@@ -1,4 +1,4 @@
-module github.com/static-fuji/go_todo_app
+module github.com/static-fuji/lab_quiz
 
 go 1.23
 

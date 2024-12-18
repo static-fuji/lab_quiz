@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/static-fuji/go_todo_app/entity"
-	"github.com/static-fuji/go_todo_app/testutil"
+	"github.com/static-fuji/lab_quiz/entity"
+	"github.com/static-fuji/lab_quiz/testutil"
 )
 
 func TestListTask(t *testing.T) {
@@ -17,20 +17,18 @@ func TestListTask(t *testing.T) {
 		rspFile string
 	}
 	tests := map[string]struct {
-		tasks []*entity.Task
+		tasks []*entity.Word
 		want  want
 	}{
 		"ok": {
-			tasks: []*entity.Task{
+			tasks: []*entity.Word{
 				{
-					ID:     1,
-					Title:  "test1",
-					Status: entity.TaskStatusTodo,
+					ID:    1,
+					Title: "test1",
 				},
 				{
-					ID:     2,
-					Title:  "test2",
-					Status: entity.TaskStatusDone,
+					ID:    2,
+					Title: "test2",
 				},
 			},
 			want: want{
@@ -39,7 +37,7 @@ func TestListTask(t *testing.T) {
 			},
 		},
 		"empty": {
-			tasks: []*entity.Task{},
+			tasks: []*entity.Word{},
 			want: want{
 				status:  http.StatusOK,
 				rspFile: "testdata/list_task/empty_rsp.json.golden",
@@ -54,14 +52,14 @@ func TestListTask(t *testing.T) {
 			w := httptest.NewRecorder()
 			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)
 
-			moq := &ListTasksServiceMock{}
-			moq.ListTasksFunc = func(ctx context.Context) (entity.Tasks, error) {
+			moq := &ListWordsServiceMock{}
+			moq.ListWordsFunc = func(ctx context.Context) (entity.Words, error) {
 				if tt.tasks != nil {
 					return tt.tasks, nil
 				}
 				return nil, errors.New("error from mock")
 			}
-			sut := ListTask{Service: moq}
+			sut := ListWord{Service: moq}
 			sut.ServeHTTP(w, r)
 
 			resp := w.Result()

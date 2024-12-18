@@ -5,116 +5,116 @@ package handler
 
 import (
 	"context"
-	"github.com/static-fuji/go_todo_app/entity"
+	"github.com/static-fuji/lab_quiz/entity"
 	"sync"
 )
 
-// Ensure, that ListTasksServiceMock does implement ListTasksService.
+// Ensure, that ListWordsServiceMock does implement ListWordsService.
 // If this is not the case, regenerate this file with moq.
-var _ ListTasksService = &ListTasksServiceMock{}
+var _ ListWordsService = &ListWordsServiceMock{}
 
-// ListTasksServiceMock is a mock implementation of ListTasksService.
+// ListWordsServiceMock is a mock implementation of ListWordsService.
 //
-//	func TestSomethingThatUsesListTasksService(t *testing.T) {
+//	func TestSomethingThatUsesListWordsService(t *testing.T) {
 //
-//		// make and configure a mocked ListTasksService
-//		mockedListTasksService := &ListTasksServiceMock{
-//			ListTasksFunc: func(ctx context.Context) (entity.Tasks, error) {
-//				panic("mock out the ListTasks method")
+//		// make and configure a mocked ListWordsService
+//		mockedListWordsService := &ListWordsServiceMock{
+//			ListWordsFunc: func(ctx context.Context) (entity.Words, error) {
+//				panic("mock out the ListWords method")
 //			},
 //		}
 //
-//		// use mockedListTasksService in code that requires ListTasksService
+//		// use mockedListWordsService in code that requires ListWordsService
 //		// and then make assertions.
 //
 //	}
-type ListTasksServiceMock struct {
-	// ListTasksFunc mocks the ListTasks method.
-	ListTasksFunc func(ctx context.Context) (entity.Tasks, error)
+type ListWordsServiceMock struct {
+	// ListWordsFunc mocks the ListWords method.
+	ListWordsFunc func(ctx context.Context) (entity.Words, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
-		// ListTasks holds details about calls to the ListTasks method.
-		ListTasks []struct {
+		// ListWords holds details about calls to the ListWords method.
+		ListWords []struct {
 			// Ctx is the ctx argument value.
 			Ctx context.Context
 		}
 	}
-	lockListTasks sync.RWMutex
+	lockListWords sync.RWMutex
 }
 
-// ListTasks calls ListTasksFunc.
-func (mock *ListTasksServiceMock) ListTasks(ctx context.Context) (entity.Tasks, error) {
-	if mock.ListTasksFunc == nil {
-		panic("ListTasksServiceMock.ListTasksFunc: method is nil but ListTasksService.ListTasks was just called")
+// ListWords calls ListWordsFunc.
+func (mock *ListWordsServiceMock) ListWords(ctx context.Context) (entity.Words, error) {
+	if mock.ListWordsFunc == nil {
+		panic("ListWordsServiceMock.ListWordsFunc: method is nil but ListWordsService.ListWords was just called")
 	}
 	callInfo := struct {
 		Ctx context.Context
 	}{
 		Ctx: ctx,
 	}
-	mock.lockListTasks.Lock()
-	mock.calls.ListTasks = append(mock.calls.ListTasks, callInfo)
-	mock.lockListTasks.Unlock()
-	return mock.ListTasksFunc(ctx)
+	mock.lockListWords.Lock()
+	mock.calls.ListWords = append(mock.calls.ListWords, callInfo)
+	mock.lockListWords.Unlock()
+	return mock.ListWordsFunc(ctx)
 }
 
-// ListTasksCalls gets all the calls that were made to ListTasks.
+// ListWordsCalls gets all the calls that were made to ListWords.
 // Check the length with:
 //
-//	len(mockedListTasksService.ListTasksCalls())
-func (mock *ListTasksServiceMock) ListTasksCalls() []struct {
+//	len(mockedListWordsService.ListWordsCalls())
+func (mock *ListWordsServiceMock) ListWordsCalls() []struct {
 	Ctx context.Context
 } {
 	var calls []struct {
 		Ctx context.Context
 	}
-	mock.lockListTasks.RLock()
-	calls = mock.calls.ListTasks
-	mock.lockListTasks.RUnlock()
+	mock.lockListWords.RLock()
+	calls = mock.calls.ListWords
+	mock.lockListWords.RUnlock()
 	return calls
 }
 
-// Ensure, that AddTaskServiceMock does implement AddTaskService.
+// Ensure, that AddWordServiceMock does implement AddWordService.
 // If this is not the case, regenerate this file with moq.
-var _ AddTaskService = &AddTaskServiceMock{}
+var _ AddWordService = &AddWordServiceMock{}
 
-// AddTaskServiceMock is a mock implementation of AddTaskService.
+// AddWordServiceMock is a mock implementation of AddWordService.
 //
-//	func TestSomethingThatUsesAddTaskService(t *testing.T) {
+//	func TestSomethingThatUsesAddWordService(t *testing.T) {
 //
-//		// make and configure a mocked AddTaskService
-//		mockedAddTaskService := &AddTaskServiceMock{
-//			AddTaskFunc: func(ctx context.Context, title string) (*entity.Task, error) {
-//				panic("mock out the AddTask method")
+//		// make and configure a mocked AddWordService
+//		mockedAddWordService := &AddWordServiceMock{
+//			AddWordFunc: func(ctx context.Context, title string) (*entity.Word, error) {
+//				panic("mock out the AddWord method")
 //			},
 //		}
 //
-//		// use mockedAddTaskService in code that requires AddTaskService
+//		// use mockedAddWordService in code that requires AddWordService
 //		// and then make assertions.
 //
 //	}
-type AddTaskServiceMock struct {
-	// AddTaskFunc mocks the AddTask method.
-	AddTaskFunc func(ctx context.Context, title string) (*entity.Task, error)
+type AddWordServiceMock struct {
+	// AddWordFunc mocks the AddWord method.
+	AddWordFunc func(ctx context.Context, title string) (*entity.Word, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
-		// AddTask holds details about calls to the AddTask method.
-		AddTask []struct {
+		// AddWord holds details about calls to the AddWord method.
+		AddWord []struct {
 			// Ctx is the ctx argument value.
 			Ctx context.Context
 			// Title is the title argument value.
 			Title string
 		}
 	}
-	lockAddTask sync.RWMutex
+	lockAddWord sync.RWMutex
 }
 
-// AddTask calls AddTaskFunc.
-func (mock *AddTaskServiceMock) AddTask(ctx context.Context, title string) (*entity.Task, error) {
-	if mock.AddTaskFunc == nil {
-		panic("AddTaskServiceMock.AddTaskFunc: method is nil but AddTaskService.AddTask was just called")
+// AddWord calls AddWordFunc.
+func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string) (*entity.Word, error) {
+	if mock.AddWordFunc == nil {
+		panic("AddWordServiceMock.AddWordFunc: method is nil but AddWordService.AddWord was just called")
 	}
 	callInfo := struct {
 		Ctx   context.Context
@@ -123,17 +123,17 @@ func (mock *AddTaskServiceMock) AddTask(ctx context.Context, title string) (*ent
 		Ctx:   ctx,
 		Title: title,
 	}
-	mock.lockAddTask.Lock()
-	mock.calls.AddTask = append(mock.calls.AddTask, callInfo)
-	mock.lockAddTask.Unlock()
-	return mock.AddTaskFunc(ctx, title)
+	mock.lockAddWord.Lock()
+	mock.calls.AddWord = append(mock.calls.AddWord, callInfo)
+	mock.lockAddWord.Unlock()
+	return mock.AddWordFunc(ctx, title)
 }
 
-// AddTaskCalls gets all the calls that were made to AddTask.
+// AddWordCalls gets all the calls that were made to AddWord.
 // Check the length with:
 //
-//	len(mockedAddTaskService.AddTaskCalls())
-func (mock *AddTaskServiceMock) AddTaskCalls() []struct {
+//	len(mockedAddWordService.AddWordCalls())
+func (mock *AddWordServiceMock) AddWordCalls() []struct {
 	Ctx   context.Context
 	Title string
 } {
@@ -141,8 +141,8 @@ func (mock *AddTaskServiceMock) AddTaskCalls() []struct {
 		Ctx   context.Context
 		Title string
 	}
-	mock.lockAddTask.RLock()
-	calls = mock.calls.AddTask
-	mock.lockAddTask.RUnlock()
+	mock.lockAddWord.RLock()
+	calls = mock.calls.AddWord
+	mock.lockAddWord.RUnlock()
 	return calls
 }

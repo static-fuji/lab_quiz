@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/static-fuji/go_todo_app/config"
+	"github.com/static-fuji/lab_quiz/config"
 )
 
 func main() {

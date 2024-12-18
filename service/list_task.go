@@ -4,17 +4,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/static-fuji/go_todo_app/entity"
-	"github.com/static-fuji/go_todo_app/store"
+	"github.com/static-fuji/lab_quiz/entity"
+	"github.com/static-fuji/lab_quiz/store"
 )
 
-type ListTask struct {
+type ListWord struct {
 	DB   store.Queryer
-	Repo TaskLister
+	Repo WordLister
 }
 
-func (l *ListTask) ListTasks(ctx context.Context) (entity.Tasks, error) {
-	ts, err := l.Repo.ListTasks(ctx, l.DB)
+func (l *ListWord) ListWords(ctx context.Context) (entity.Words, error) {
+	ts, err := l.Repo.ListWords(ctx, l.DB)
 	if err != nil {
 		return nil, fmt.Errorf("failed to list: %w", err)
 	}
