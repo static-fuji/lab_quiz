@@ -13,9 +13,10 @@ type AddWord struct {
 	Repo WordAdder
 }
 
-func (a *AddWord) AddWord(ctx context.Context, title string) (*entity.Word, error) {
+func (a *AddWord) AddWord(ctx context.Context, title string, desc string) (*entity.Word, error) {
 	t := &entity.Word{
 		Title: title,
+		Desc:  desc,
 	}
 
 	err := a.Repo.AddWord(ctx, a.DB, t)

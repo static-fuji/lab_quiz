@@ -16,6 +16,7 @@ func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var b struct {
 		Title string `json:"title" validate:"required"`
+		Desc  string `json:"description" validate:"required"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&b); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -31,7 +32,7 @@ func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t, err := at.Service.AddWord(ctx, b.Title)
+	t, err := at.Service.AddWord(ctx, b.Title, b.Desc)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),

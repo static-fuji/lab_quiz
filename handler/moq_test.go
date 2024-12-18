@@ -85,7 +85,7 @@ var _ AddWordService = &AddWordServiceMock{}
 //
 //		// make and configure a mocked AddWordService
 //		mockedAddWordService := &AddWordServiceMock{
-//			AddWordFunc: func(ctx context.Context, title string) (*entity.Word, error) {
+//			AddWordFunc: func(ctx context.Context, title string, desc string) (*entity.Word, error) {
 //				panic("mock out the AddWord method")
 //			},
 //		}
@@ -96,7 +96,7 @@ var _ AddWordService = &AddWordServiceMock{}
 //	}
 type AddWordServiceMock struct {
 	// AddWordFunc mocks the AddWord method.
-	AddWordFunc func(ctx context.Context, title string) (*entity.Word, error)
+	AddWordFunc func(ctx context.Context, title string, desc string) (*entity.Word, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
@@ -106,27 +106,31 @@ type AddWordServiceMock struct {
 			Ctx context.Context
 			// Title is the title argument value.
 			Title string
+			// Desc is the desc argument value.
+			Desc string
 		}
 	}
 	lockAddWord sync.RWMutex
 }
 
 // AddWord calls AddWordFunc.
-func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string) (*entity.Word, error) {
+func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string, desc string) (*entity.Word, error) {
 	if mock.AddWordFunc == nil {
 		panic("AddWordServiceMock.AddWordFunc: method is nil but AddWordService.AddWord was just called")
 	}
 	callInfo := struct {
 		Ctx   context.Context
 		Title string
+		Desc  string
 	}{
 		Ctx:   ctx,
 		Title: title,
+		Desc:  desc,
 	}
 	mock.lockAddWord.Lock()
 	mock.calls.AddWord = append(mock.calls.AddWord, callInfo)
 	mock.lockAddWord.Unlock()
-	return mock.AddWordFunc(ctx, title)
+	return mock.AddWordFunc(ctx, title, desc)
 }
 
 // AddWordCalls gets all the calls that were made to AddWord.
@@ -136,10 +140,12 @@ func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string) (*ent
 func (mock *AddWordServiceMock) AddWordCalls() []struct {
 	Ctx   context.Context
 	Title string
+	Desc  string
 } {
 	var calls []struct {
 		Ctx   context.Context
 		Title string
+		Desc  string
 	}
 	mock.lockAddWord.RLock()
 	calls = mock.calls.AddWord

@@ -12,5 +12,5 @@ type ListWordsService interface {
 }
 
 type AddWordService interface {
-	AddWord(ctx context.Context, title string) (*entity.Word, error)
+	AddWord(ctx context.Context, title string, desc string) (*entity.Word, error)
 }

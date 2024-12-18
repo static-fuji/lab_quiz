@@ -29,7 +29,7 @@ func (r *Repository) AddWord(
 		VALUES (?, ?, ?, ?)`
 
 	results, err := db.ExecContext(
-		ctx, sql, t.Title, t.Created, t.Modified,
+		ctx, sql, t.Title, t.Desc, t.Created, t.Modified,
 	)
 
 	if err != nil {
