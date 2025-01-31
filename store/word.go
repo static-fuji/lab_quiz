@@ -25,11 +25,11 @@ func (r *Repository) AddWord(
 	t.Created = r.Clocker.Now()
 	t.Modified = r.Clocker.Now()
 	sql := `INSERT INTO words
-		(title, description, created, modified)
-		VALUES (?, ?, ?, ?)`
+		(title, description, lab, created, modified)
+		VALUES (?, ?, ?, ?, ?)`
 
 	results, err := db.ExecContext(
-		ctx, sql, t.Title, t.Created, t.Modified,
+		ctx, sql, t.Title, t.Desc, t.Lab, t.Created, t.Modified,
 	)
 
 	if err != nil {

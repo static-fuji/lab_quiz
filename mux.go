@@ -28,7 +28,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	r := store.Repository{Clocker: clock.RealClocker{}}
 
 	at := &handler.AddWord{
-		Service:   &service.AddWord{DB: db, Repo: &r},
+		Service:   &service.AddWord{ExeceDB: db, QueryDB: db, Repo: &r},
 		Validator: v,
 	}
 	mux.Post("/words", at.ServeHTTP)
@@ -37,6 +37,12 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service: &service.ListWord{DB: db, Repo: &r},
 	}
 	mux.Get("/words", lt.ServeHTTP)
+
+	aa := &handler.AddArticle{
+		Service:   &service.AddArticle{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Post("/articles", aa.ServeHTTP)
 
 	return mux, cleanup, nil
 }

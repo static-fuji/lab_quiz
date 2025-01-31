@@ -7,18 +7,16 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type AddWord struct {
-	Service   AddWordService
+type AddArticle struct {
+	Service   AddArticleService
 	Validator *validator.Validate
 }
 
-func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (aa *AddArticle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var b struct {
-		Title     string `json:"title" validate:"required"`
-		Desc      string `json:"desc" validate:"required"`
-		Lab       string `json:"lab" validate:"required"`
-		ArticleID int    `json:"article_id" validate:"required"`
+		Title  string `json:"title" validate:"required"`
+		Author string `json:"author" validate:"required"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&b); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -26,7 +24,7 @@ func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}, http.StatusInternalServerError)
 		return
 	}
-	err := at.Validator.Struct(b)
+	err := aa.Validator.Struct(b)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),
@@ -34,15 +32,7 @@ func (at *AddWord) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = at.Service.SearchArticleID(ctx, b.ArticleID)
-	if err != nil {
-		RespondJSON(ctx, w, &ErrResponse{
-			Message: err.Error(),
-		}, http.StatusInternalServerError)
-		return
-	}
-
-	t, err := at.Service.AddWord(ctx, b.Title, b.Desc, b.Lab, b.ArticleID)
+	t, err := aa.Service.AddArticle(ctx, b.Title, b.Author)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),

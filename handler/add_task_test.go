@@ -53,7 +53,7 @@ func TestAddTask(t *testing.T) {
 
 			moq := &AddWordServiceMock{}
 			moq.AddWordFunc = func(
-				ctx context.Context, title string,
+				ctx context.Context, title string, desc string, lab string, articleID int,
 			) (*entity.Word, error) {
 				if tt.want.status == http.StatusOK {
 					return &entity.Word{ID: 1}, nil
