@@ -85,7 +85,7 @@ var _ AddWordService = &AddWordServiceMock{}
 //
 //		// make and configure a mocked AddWordService
 //		mockedAddWordService := &AddWordServiceMock{
-//			AddWordFunc: func(ctx context.Context, title string, desc string, lab string, articleID int) (*entity.Word, error) {
+//			AddWordFunc: func(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error) {
 //				panic("mock out the AddWord method")
 //			},
 //			SearchArticleIDFunc: func(ctx context.Context, id int) error {
@@ -99,7 +99,7 @@ var _ AddWordService = &AddWordServiceMock{}
 //	}
 type AddWordServiceMock struct {
 	// AddWordFunc mocks the AddWord method.
-	AddWordFunc func(ctx context.Context, title string, desc string, lab string, articleID int) (*entity.Word, error)
+	AddWordFunc func(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error)
 
 	// SearchArticleIDFunc mocks the SearchArticleID method.
 	SearchArticleIDFunc func(ctx context.Context, id int) error
@@ -117,7 +117,7 @@ type AddWordServiceMock struct {
 			// Lab is the lab argument value.
 			Lab string
 			// ArticleID is the articleID argument value.
-			ArticleID int
+			ArticleID []int
 		}
 		// SearchArticleID holds details about calls to the SearchArticleID method.
 		SearchArticleID []struct {
@@ -132,7 +132,7 @@ type AddWordServiceMock struct {
 }
 
 // AddWord calls AddWordFunc.
-func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string, desc string, lab string, articleID int) (*entity.Word, error) {
+func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error) {
 	if mock.AddWordFunc == nil {
 		panic("AddWordServiceMock.AddWordFunc: method is nil but AddWordService.AddWord was just called")
 	}
@@ -141,7 +141,7 @@ func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string, desc 
 		Title     string
 		Desc      string
 		Lab       string
-		ArticleID int
+		ArticleID []int
 	}{
 		Ctx:       ctx,
 		Title:     title,
@@ -164,14 +164,14 @@ func (mock *AddWordServiceMock) AddWordCalls() []struct {
 	Title     string
 	Desc      string
 	Lab       string
-	ArticleID int
+	ArticleID []int
 } {
 	var calls []struct {
 		Ctx       context.Context
 		Title     string
 		Desc      string
 		Lab       string
-		ArticleID int
+		ArticleID []int
 	}
 	mock.lockAddWord.RLock()
 	calls = mock.calls.AddWord

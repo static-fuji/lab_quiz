@@ -12,10 +12,14 @@ type ListWordsService interface {
 }
 
 type AddWordService interface {
-	AddWord(ctx context.Context, title string, desc string, lab string, articleID int) (*entity.Word, error)
+	AddWord(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error)
 	SearchArticleID(ctx context.Context, id int) error
 }
 
 type AddArticleService interface {
 	AddArticle(ctx context.Context, title string, author string) (*entity.Article, error)
+}
+
+type WordSearchService interface {
+	ListBind(ctx context.Context, id int) (entity.Words, error)
 }

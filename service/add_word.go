@@ -14,17 +14,22 @@ type AddWord struct {
 	Repo    WordAdder
 }
 
-func (a *AddWord) AddWord(ctx context.Context, title string, desc string, lab string, articleID int) (*entity.Word, error) {
+func (a *AddWord) AddWord(ctx context.Context, title string, desc string, lab string, articleIDs []int) (*entity.Word, error) {
 	t := &entity.Word{
-		Title:     title,
-		Desc:      desc,
-		Lab:       lab,
-		ArticleID: articleID,
+		Title:      title,
+		Desc:       desc,
+		Lab:        lab,
+		ArticleIDs: articleIDs,
 	}
 
 	err := a.Repo.AddWord(ctx, a.ExeceDB, t)
 	if err != nil {
 		return nil, fmt.Errorf("failed to register: %w", err)
+	}
+
+	err = a.Repo.BindArticleToWords(ctx, a.ExeceDB, t)
+	if err != nil {
+		return nil, fmt.Errorf("failed to bind article to words: %w", err)
 	}
 
 	return t, nil

@@ -12,7 +12,7 @@ import (
 	"github.com/static-fuji/lab_quiz/testutil"
 )
 
-func TestAddTask(t *testing.T) {
+func TestAddWords(t *testing.T) {
 	t.Parallel()
 	type want struct {
 		status  int
@@ -52,13 +52,14 @@ func TestAddTask(t *testing.T) {
 			)
 
 			moq := &AddWordServiceMock{}
-			moq.AddWordFunc = func(
-				ctx context.Context, title string, desc string, lab string, articleID int,
-			) (*entity.Word, error) {
+			moq.AddWordFunc = func(ctx context.Context, title, desc, lab string, articleIDs []int) (*entity.Word, error) {
 				if tt.want.status == http.StatusOK {
 					return &entity.Word{ID: 1}, nil
 				}
 				return nil, errors.New("error from mock")
+			}
+			moq.SearchArticleIDFunc = func(ctx context.Context, articleID int) error {
+				return nil
 			}
 
 			sut := AddWord{

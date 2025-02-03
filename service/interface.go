@@ -10,6 +10,7 @@ import (
 type WordAdder interface {
 	AddWord(ctx context.Context, db store.Execer, t *entity.Word) error
 	SearchArticleID(ctx context.Context, db store.Queryer, id int) error
+	BindArticleToWords(ctx context.Context, db store.Execer, t *entity.Word) error
 }
 
 type WordLister interface {
@@ -18,4 +19,12 @@ type WordLister interface {
 
 type ArticleAdder interface {
 	AddArticle(ctx context.Context, db store.Execer, t *entity.Article) error
+}
+
+type ArticleSearcher interface {
+	SearchArticleID(ctx context.Context, db store.Queryer, id int) error
+}
+
+type WordSearcher interface {
+	ListBind(ctx context.Context, db store.Queryer, id int) (entity.Words, error)
 }

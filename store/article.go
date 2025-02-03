@@ -36,6 +36,7 @@ func (r *Repository) SearchArticleID(
 	ctx context.Context, db Queryer, id int,
 ) error {
 	sql := `SELECT id FROM articles WHERE id = ?`
+
 	if err := db.QueryRowContext(ctx, sql, id).Scan(&id); err != nil {
 		return err
 	}

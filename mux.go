@@ -27,22 +27,27 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	}
 	r := store.Repository{Clocker: clock.RealClocker{}}
 
-	at := &handler.AddWord{
+	aw := &handler.AddWord{
 		Service:   &service.AddWord{ExeceDB: db, QueryDB: db, Repo: &r},
 		Validator: v,
 	}
-	mux.Post("/words", at.ServeHTTP)
+	mux.Post("/words", aw.ServeHTTP)
 
-	lt := &handler.ListWord{
+	lw := &handler.ListWord{
 		Service: &service.ListWord{DB: db, Repo: &r},
 	}
-	mux.Get("/words", lt.ServeHTTP)
+	mux.Get("/words", lw.ServeHTTP)
 
 	aa := &handler.AddArticle{
 		Service:   &service.AddArticle{DB: db, Repo: &r},
 		Validator: v,
 	}
 	mux.Post("/articles", aa.ServeHTTP)
+
+	lb := &handler.ListBind{
+		Service: &service.ListBind{DB: db, Repo: &r},
+	}
+	mux.Get("/bind/{articleID}/words", lb.ServeHTTP)
 
 	return mux, cleanup, nil
 }
