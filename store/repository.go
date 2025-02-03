@@ -8,7 +8,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
-	"github.com/static-fuji/lab_quiz/clock" // ここを追加
+	"github.com/static-fuji/lab_quiz/clock"
 	"github.com/static-fuji/lab_quiz/config"
 )
 

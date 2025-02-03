@@ -85,8 +85,11 @@ var _ AddWordService = &AddWordServiceMock{}
 //
 //		// make and configure a mocked AddWordService
 //		mockedAddWordService := &AddWordServiceMock{
-//			AddWordFunc: func(ctx context.Context, title string) (*entity.Word, error) {
+//			AddWordFunc: func(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error) {
 //				panic("mock out the AddWord method")
+//			},
+//			SearchArticleIDFunc: func(ctx context.Context, id int) error {
+//				panic("mock out the SearchArticleID method")
 //			},
 //		}
 //
@@ -96,7 +99,10 @@ var _ AddWordService = &AddWordServiceMock{}
 //	}
 type AddWordServiceMock struct {
 	// AddWordFunc mocks the AddWord method.
-	AddWordFunc func(ctx context.Context, title string) (*entity.Word, error)
+	AddWordFunc func(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error)
+
+	// SearchArticleIDFunc mocks the SearchArticleID method.
+	SearchArticleIDFunc func(ctx context.Context, id int) error
 
 	// calls tracks calls to the methods.
 	calls struct {
@@ -106,27 +112,47 @@ type AddWordServiceMock struct {
 			Ctx context.Context
 			// Title is the title argument value.
 			Title string
+			// Desc is the desc argument value.
+			Desc string
+			// Lab is the lab argument value.
+			Lab string
+			// ArticleID is the articleID argument value.
+			ArticleID []int
+		}
+		// SearchArticleID holds details about calls to the SearchArticleID method.
+		SearchArticleID []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+			// ID is the id argument value.
+			ID int
 		}
 	}
-	lockAddWord sync.RWMutex
+	lockAddWord         sync.RWMutex
+	lockSearchArticleID sync.RWMutex
 }
 
 // AddWord calls AddWordFunc.
-func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string) (*entity.Word, error) {
+func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string, desc string, lab string, articleID []int) (*entity.Word, error) {
 	if mock.AddWordFunc == nil {
 		panic("AddWordServiceMock.AddWordFunc: method is nil but AddWordService.AddWord was just called")
 	}
 	callInfo := struct {
-		Ctx   context.Context
-		Title string
+		Ctx       context.Context
+		Title     string
+		Desc      string
+		Lab       string
+		ArticleID []int
 	}{
-		Ctx:   ctx,
-		Title: title,
+		Ctx:       ctx,
+		Title:     title,
+		Desc:      desc,
+		Lab:       lab,
+		ArticleID: articleID,
 	}
 	mock.lockAddWord.Lock()
 	mock.calls.AddWord = append(mock.calls.AddWord, callInfo)
 	mock.lockAddWord.Unlock()
-	return mock.AddWordFunc(ctx, title)
+	return mock.AddWordFunc(ctx, title, desc, lab, articleID)
 }
 
 // AddWordCalls gets all the calls that were made to AddWord.
@@ -134,15 +160,135 @@ func (mock *AddWordServiceMock) AddWord(ctx context.Context, title string) (*ent
 //
 //	len(mockedAddWordService.AddWordCalls())
 func (mock *AddWordServiceMock) AddWordCalls() []struct {
-	Ctx   context.Context
-	Title string
+	Ctx       context.Context
+	Title     string
+	Desc      string
+	Lab       string
+	ArticleID []int
 } {
 	var calls []struct {
-		Ctx   context.Context
-		Title string
+		Ctx       context.Context
+		Title     string
+		Desc      string
+		Lab       string
+		ArticleID []int
 	}
 	mock.lockAddWord.RLock()
 	calls = mock.calls.AddWord
 	mock.lockAddWord.RUnlock()
+	return calls
+}
+
+// SearchArticleID calls SearchArticleIDFunc.
+func (mock *AddWordServiceMock) SearchArticleID(ctx context.Context, id int) error {
+	if mock.SearchArticleIDFunc == nil {
+		panic("AddWordServiceMock.SearchArticleIDFunc: method is nil but AddWordService.SearchArticleID was just called")
+	}
+	callInfo := struct {
+		Ctx context.Context
+		ID  int
+	}{
+		Ctx: ctx,
+		ID:  id,
+	}
+	mock.lockSearchArticleID.Lock()
+	mock.calls.SearchArticleID = append(mock.calls.SearchArticleID, callInfo)
+	mock.lockSearchArticleID.Unlock()
+	return mock.SearchArticleIDFunc(ctx, id)
+}
+
+// SearchArticleIDCalls gets all the calls that were made to SearchArticleID.
+// Check the length with:
+//
+//	len(mockedAddWordService.SearchArticleIDCalls())
+func (mock *AddWordServiceMock) SearchArticleIDCalls() []struct {
+	Ctx context.Context
+	ID  int
+} {
+	var calls []struct {
+		Ctx context.Context
+		ID  int
+	}
+	mock.lockSearchArticleID.RLock()
+	calls = mock.calls.SearchArticleID
+	mock.lockSearchArticleID.RUnlock()
+	return calls
+}
+
+// Ensure, that AddArticleServiceMock does implement AddArticleService.
+// If this is not the case, regenerate this file with moq.
+var _ AddArticleService = &AddArticleServiceMock{}
+
+// AddArticleServiceMock is a mock implementation of AddArticleService.
+//
+//	func TestSomethingThatUsesAddArticleService(t *testing.T) {
+//
+//		// make and configure a mocked AddArticleService
+//		mockedAddArticleService := &AddArticleServiceMock{
+//			AddArticleFunc: func(ctx context.Context, title string, author string) (*entity.Article, error) {
+//				panic("mock out the AddArticle method")
+//			},
+//		}
+//
+//		// use mockedAddArticleService in code that requires AddArticleService
+//		// and then make assertions.
+//
+//	}
+type AddArticleServiceMock struct {
+	// AddArticleFunc mocks the AddArticle method.
+	AddArticleFunc func(ctx context.Context, title string, author string) (*entity.Article, error)
+
+	// calls tracks calls to the methods.
+	calls struct {
+		// AddArticle holds details about calls to the AddArticle method.
+		AddArticle []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+			// Title is the title argument value.
+			Title string
+			// Author is the author argument value.
+			Author string
+		}
+	}
+	lockAddArticle sync.RWMutex
+}
+
+// AddArticle calls AddArticleFunc.
+func (mock *AddArticleServiceMock) AddArticle(ctx context.Context, title string, author string) (*entity.Article, error) {
+	if mock.AddArticleFunc == nil {
+		panic("AddArticleServiceMock.AddArticleFunc: method is nil but AddArticleService.AddArticle was just called")
+	}
+	callInfo := struct {
+		Ctx    context.Context
+		Title  string
+		Author string
+	}{
+		Ctx:    ctx,
+		Title:  title,
+		Author: author,
+	}
+	mock.lockAddArticle.Lock()
+	mock.calls.AddArticle = append(mock.calls.AddArticle, callInfo)
+	mock.lockAddArticle.Unlock()
+	return mock.AddArticleFunc(ctx, title, author)
+}
+
+// AddArticleCalls gets all the calls that were made to AddArticle.
+// Check the length with:
+//
+//	len(mockedAddArticleService.AddArticleCalls())
+func (mock *AddArticleServiceMock) AddArticleCalls() []struct {
+	Ctx    context.Context
+	Title  string
+	Author string
+} {
+	var calls []struct {
+		Ctx    context.Context
+		Title  string
+		Author string
+	}
+	mock.lockAddArticle.RLock()
+	calls = mock.calls.AddArticle
+	mock.lockAddArticle.RUnlock()
 	return calls
 }
