@@ -16,6 +16,10 @@ type AddWordService interface {
 	SearchArticleID(ctx context.Context, id int) error
 }
 
+type ListArticlesService interface {
+	ListArticle(ctx context.Context) (entity.Articles, error)
+}
+
 type AddArticleService interface {
 	AddArticle(ctx context.Context, title string, author string) (*entity.Article, error)
 }
