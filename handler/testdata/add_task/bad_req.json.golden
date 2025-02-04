@@ -1,3 +1,6 @@
 {
-    "titla": "Implement a handler", "desc": "aaa", "lab": "sss", "article_id": -1
+    "titla": "Implement a handler", 
+    "desc": "aaa", 
+    "lab": "sss", 
+    "article_id": [1]
 }

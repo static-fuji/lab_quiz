@@ -11,17 +11,17 @@ import (
 	"github.com/static-fuji/lab_quiz/testutil"
 )
 
-func TestListTask(t *testing.T) {
+func TestListWord(t *testing.T) {
 	type want struct {
 		status  int
 		rspFile string
 	}
 	tests := map[string]struct {
-		tasks []*entity.Word
+		words []*entity.Word
 		want  want
 	}{
 		"ok": {
-			tasks: []*entity.Word{
+			words: []*entity.Word{
 				{
 					ID:    1,
 					Title: "test1",
@@ -33,14 +33,14 @@ func TestListTask(t *testing.T) {
 			},
 			want: want{
 				status:  http.StatusOK,
-				rspFile: "testdata/list_task/ok_rsp.json.golden",
+				rspFile: "testdata/list_word/ok_rsp.json.golden",
 			},
 		},
 		"empty": {
-			tasks: []*entity.Word{},
+			words: []*entity.Word{},
 			want: want{
 				status:  http.StatusOK,
-				rspFile: "testdata/list_task/empty_rsp.json.golden",
+				rspFile: "testdata/list_word/empty_rsp.json.golden",
 			},
 		},
 	}
@@ -50,12 +50,12 @@ func TestListTask(t *testing.T) {
 			t.Parallel()
 
 			w := httptest.NewRecorder()
-			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)
+			r := httptest.NewRequest(http.MethodGet, "/words", nil)
 
 			moq := &ListWordsServiceMock{}
 			moq.ListWordsFunc = func(ctx context.Context) (entity.Words, error) {
-				if tt.tasks != nil {
-					return tt.tasks, nil
+				if tt.words != nil {
+					return tt.words, nil
 				}
 				return nil, errors.New("error from mock")
 			}
