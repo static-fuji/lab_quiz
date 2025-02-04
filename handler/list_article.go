@@ -18,7 +18,7 @@ type article struct {
 
 func (la *ListArticle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	articles, err := la.Service.ListArticle(ctx)
+	articles, err := la.Service.ListArticles(ctx)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),
