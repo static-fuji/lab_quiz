@@ -21,6 +21,10 @@ type ArticleAdder interface {
 	AddArticle(ctx context.Context, db store.Execer, t *entity.Article) error
 }
 
+type ArticleLister interface {
+	ListArticle(ctx context.Context, db store.Queryer) (entity.Articles, error)
+}
+
 type ArticleSearcher interface {
 	SearchArticleID(ctx context.Context, db store.Queryer, id int) error
 }

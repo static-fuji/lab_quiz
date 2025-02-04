@@ -6,6 +6,35 @@ import (
 	"github.com/static-fuji/lab_quiz/entity"
 )
 
+func (r *Repository) ListArticle(
+	ctx context.Context, db Queryer,
+) (entity.Articles, error) {
+	sql := `SELECT id, title, author, created, modified FROM articles`
+
+	rows, err := db.QueryContext(ctx, sql)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var articles entity.Articles
+	for rows.Next() {
+		var t entity.Article
+		if err := rows.Scan(
+			&t.ID,
+			&t.Title,
+			&t.Author,
+			&t.Created,
+			&t.Modified,
+		); err != nil {
+			return nil, err
+		}
+		articles = append(articles, &t)
+	}
+
+	return articles, nil
+}
+
 func (r *Repository) AddArticle(
 	ctx context.Context, db Execer, t *entity.Article,
 ) error {

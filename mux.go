@@ -44,6 +44,11 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	}
 	mux.Post("/articles", aa.ServeHTTP)
 
+	la := &handler.ListArticle{
+		Service: &service.ListArticle{DB: db, Repo: &r},
+	}
+	mux.Get("/articles", la.ServeHTTP)
+
 	lb := &handler.ListBind{
 		Service: &service.ListBind{DB: db, Repo: &r},
 	}

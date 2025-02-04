@@ -17,7 +17,7 @@ type AddWordService interface {
 }
 
 type ListArticlesService interface {
-	ListArticle(ctx context.Context) (entity.Articles, error)
+	ListArticles(ctx context.Context) (entity.Articles, error)
 }
 
 type AddArticleService interface {
