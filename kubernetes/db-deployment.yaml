@@ -15,7 +15,7 @@ spec:
         app: db
     spec:
       containers:
-      - name: db-container
+      - name: lab-db
         image: mysql:8.0.29
         ports:
         - containerPort: 3306
@@ -23,11 +23,11 @@ spec:
         - name: MYSQL_ALLOW_EMPTY_PASSWORD
           value: "yes"
         - name: MYSQL_USER
-          value: "todo"
+          value: "lab"
         - name: MYSQL_PASSWORD
-          value: "todo"
+          value: "lab"
         - name: MYSQL_DATABASE
-          value: "todo"
+          value: "lab"
         volumeMounts:
         - name: mysql-data
           mountPath: /var/lib/mysql
