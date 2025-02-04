@@ -292,3 +292,141 @@ func (mock *AddArticleServiceMock) AddArticleCalls() []struct {
 	mock.lockAddArticle.RUnlock()
 	return calls
 }
+
+// Ensure, that ListArticlesServiceMock does implement ListArticlesService.
+// If this is not the case, regenerate this file with moq.
+var _ ListArticlesService = &ListArticlesServiceMock{}
+
+// ListArticlesServiceMock is a mock implementation of ListArticlesService.
+//
+//	func TestSomethingThatUsesListArticlesService(t *testing.T) {
+//
+//		// make and configure a mocked ListArticlesService
+//		mockedListArticlesService := &ListArticlesServiceMock{
+//			ListArticlesFunc: func(ctx context.Context) (entity.Articles, error) {
+//				panic("mock out the ListArticles method")
+//			},
+//		}
+//
+//		// use mockedListArticlesService in code that requires ListArticlesService
+//		// and then make assertions.
+//
+//	}
+type ListArticlesServiceMock struct {
+	// ListArticlesFunc mocks the ListArticles method.
+	ListArticlesFunc func(ctx context.Context) (entity.Articles, error)
+
+	// calls tracks calls to the methods.
+	calls struct {
+		// ListArticles holds details about calls to the ListArticles method.
+		ListArticles []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+		}
+	}
+	lockListArticles sync.RWMutex
+}
+
+// ListArticles calls ListArticlesFunc.
+func (mock *ListArticlesServiceMock) ListArticles(ctx context.Context) (entity.Articles, error) {
+	if mock.ListArticlesFunc == nil {
+		panic("ListArticlesServiceMock.ListArticlesFunc: method is nil but ListArticlesService.ListArticles was just called")
+	}
+	callInfo := struct {
+		Ctx context.Context
+	}{
+		Ctx: ctx,
+	}
+	mock.lockListArticles.Lock()
+	mock.calls.ListArticles = append(mock.calls.ListArticles, callInfo)
+	mock.lockListArticles.Unlock()
+	return mock.ListArticlesFunc(ctx)
+}
+
+// ListArticlesCalls gets all the calls that were made to ListArticles.
+// Check the length with:
+//
+//	len(mockedListArticlesService.ListArticlesCalls())
+func (mock *ListArticlesServiceMock) ListArticlesCalls() []struct {
+	Ctx context.Context
+} {
+	var calls []struct {
+		Ctx context.Context
+	}
+	mock.lockListArticles.RLock()
+	calls = mock.calls.ListArticles
+	mock.lockListArticles.RUnlock()
+	return calls
+}
+
+// Ensure, that WordSearchServiceMock does implement WordSearchService.
+// If this is not the case, regenerate this file with moq.
+var _ WordSearchService = &WordSearchServiceMock{}
+
+// WordSearchServiceMock is a mock implementation of WordSearchService.
+//
+//	func TestSomethingThatUsesWordSearchService(t *testing.T) {
+//
+//		// make and configure a mocked WordSearchService
+//		mockedWordSearchService := &WordSearchServiceMock{
+//			ListBindFunc: func(ctx context.Context, id int) (entity.Words, error) {
+//				panic("mock out the ListBind method")
+//			},
+//		}
+//
+//		// use mockedWordSearchService in code that requires WordSearchService
+//		// and then make assertions.
+//
+//	}
+type WordSearchServiceMock struct {
+	// ListBindFunc mocks the ListBind method.
+	ListBindFunc func(ctx context.Context, id int) (entity.Words, error)
+
+	// calls tracks calls to the methods.
+	calls struct {
+		// ListBind holds details about calls to the ListBind method.
+		ListBind []struct {
+			// Ctx is the ctx argument value.
+			Ctx context.Context
+			// ID is the id argument value.
+			ID int
+		}
+	}
+	lockListBind sync.RWMutex
+}
+
+// ListBind calls ListBindFunc.
+func (mock *WordSearchServiceMock) ListBind(ctx context.Context, id int) (entity.Words, error) {
+	if mock.ListBindFunc == nil {
+		panic("WordSearchServiceMock.ListBindFunc: method is nil but WordSearchService.ListBind was just called")
+	}
+	callInfo := struct {
+		Ctx context.Context
+		ID  int
+	}{
+		Ctx: ctx,
+		ID:  id,
+	}
+	mock.lockListBind.Lock()
+	mock.calls.ListBind = append(mock.calls.ListBind, callInfo)
+	mock.lockListBind.Unlock()
+	return mock.ListBindFunc(ctx, id)
+}
+
+// ListBindCalls gets all the calls that were made to ListBind.
+// Check the length with:
+//
+//	len(mockedWordSearchService.ListBindCalls())
+func (mock *WordSearchServiceMock) ListBindCalls() []struct {
+	Ctx context.Context
+	ID  int
+} {
+	var calls []struct {
+		Ctx context.Context
+		ID  int
+	}
+	mock.lockListBind.RLock()
+	calls = mock.calls.ListBind
+	mock.lockListBind.RUnlock()
+	return calls
+}

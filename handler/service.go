@@ -6,7 +6,7 @@ import (
 	"github.com/static-fuji/lab_quiz/entity"
 )
 
-//go:generate go run github.com/matryer/moq -out moq_test.go . ListWordsService AddWordService AddArticleService
+//go:generate go run github.com/matryer/moq -out moq_test.go . ListWordsService AddWordService AddArticleService ListArticlesService WordSearchService
 type ListWordsService interface {
 	ListWords(ctx context.Context) (entity.Words, error)
 }

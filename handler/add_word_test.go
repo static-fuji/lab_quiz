@@ -37,6 +37,13 @@ func TestAddWords(t *testing.T) {
 				rspFile: "testdata/add_task/bad_req_rsp.json.golden",
 			},
 		},
+		"noValidArticleID": {
+			reqFile: "testdata/add_task/no_valid_article_id_req.json.golden",
+			want: want{
+				status:  http.StatusBadRequest,
+				rspFile: "testdata/add_task/no_valid_article_id_rsp.json.golden",
+			},
+		},
 	}
 
 	for n, tt := range tests {
@@ -59,6 +66,9 @@ func TestAddWords(t *testing.T) {
 				return nil, errors.New("error from mock")
 			}
 			moq.SearchArticleIDFunc = func(ctx context.Context, articleID int) error {
+				if tt.want.status == http.StatusBadRequest && n == "noValidArticleID" {
+					return errors.New("article not found")
+				}
 				return nil
 			}
 
