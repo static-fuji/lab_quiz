@@ -1,3 +1,6 @@
+/*
+*専門用語を登録するサービス
+ */
 package service
 
 import (

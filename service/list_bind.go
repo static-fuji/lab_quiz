@@ -1,3 +1,6 @@
+/*
+*論文に関連する専門用語を取得する
+ */
 package service
 
 import (

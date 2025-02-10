@@ -1,3 +1,6 @@
+/*
+*専門用語を追加するハンドラ
+ */
 package handler
 
 import (

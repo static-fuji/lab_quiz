@@ -1,3 +1,6 @@
+/*
+*専門用語一覧を取得するサービス
+ */
 package service
 
 import (

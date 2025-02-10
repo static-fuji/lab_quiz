@@ -1,3 +1,6 @@
+/*
+データベースの接続を行うためのパッケージ
+*/
 package store
 
 import (

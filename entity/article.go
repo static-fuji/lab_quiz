@@ -1,3 +1,12 @@
+/*
+*論文情報を表すエンティティ
+*ID: 論文ID
+*Title: 論文タイトル
+*Author: 著者
+*Created: 作成日時
+*Modified: 更新日時
+ */
+
 package entity
 
 import (

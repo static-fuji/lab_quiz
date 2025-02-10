@@ -1,3 +1,6 @@
+/*
+*論文を追加するサービス
+ */
 package service
 
 import (

@@ -1,3 +1,7 @@
+/*
+*wordsテーブルに関する処理を行うパッケージ
+ */
+
 package store
 
 import (
