@@ -1,3 +1,6 @@
+/*
+*レスポンスを返すためのヘルパー関数
+ */
 package handler
 
 import (

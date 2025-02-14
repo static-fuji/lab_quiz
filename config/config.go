@@ -1,3 +1,6 @@
+/*
+*環境変数を読み込むためのconfigパッケージ
+ */
 package config
 
 import (

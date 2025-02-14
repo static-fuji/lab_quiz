@@ -1,3 +1,6 @@
+/*
+*サービスのインターフェースを定義
+ */
 package handler
 
 import (

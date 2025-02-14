@@ -1,3 +1,6 @@
+/*
+*論文一覧を取得するサービス
+ */
 package service
 
 import (

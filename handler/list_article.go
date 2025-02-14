@@ -1,3 +1,6 @@
+/*
+*論文一覧を取得するためのハンドラ
+ */
 package handler
 
 import (

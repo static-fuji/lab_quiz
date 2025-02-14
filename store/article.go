@@ -1,3 +1,6 @@
+/*
+* articlesテーブルに関する処理を行う
+ */
 package store
 
 import (

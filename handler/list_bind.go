@@ -1,3 +1,6 @@
+/*
+*論文に紐づく単語一覧を取得するAPI
+ */
 package handler
 
 import (

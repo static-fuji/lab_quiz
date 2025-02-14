@@ -1,3 +1,7 @@
+/*
+*article_wordsテーブルに関する処理を行う
+ */
+
 package store
 
 import (
